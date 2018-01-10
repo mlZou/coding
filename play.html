@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>播放视频</title>
+</head>
+<style>
+    video{
+        border: 1px solid #ccc;
+    }
+</style>
+<body>
+    <video id="player" src="" width="500" height="300" controls="controls"></video>
+</body>
+<script>
+    var id = location.search.split('?id=')[1];
+    player.src = 'http://www.renren66.com/play/getty.php?id=' + id;
+    player.addEventListener("seeked", function() {
+        player.play();
+    }, true);
+</script>
+</html>

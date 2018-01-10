@@ -5,9 +5,69 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>主页</title>
+    <title>电影</title>
+    <style>
+        ul,li{
+            list-style: none;
+        }
+        ul{
+            width: 100%;
+        }
+        li{
+            width: 25%;
+            float: left;
+            margin-bottom: 20px;
+        }
+        a{
+            display: block;
+        }
+        a,img{
+            width:200px;
+            height:300px;
+        }
+    </style>
 </head>
+<script src="https://cdn.bootcss.com/axios/0.17.1/axios.min.js"></script>
 <body>
-    <h1>木仓</h1>
+<label for="url">请输入爬的地址</label>
+<input type="text" name="url" id="url">
+<button onclick="submit()">提交</button>
+<div id="content">
+</div>
 </body>
+<script>
+    function submit() {
+        var url = document.getElementById('url').value;
+        var flag = true;
+        if(!url){
+            flag = false;
+            url = 'www.renren66.com';
+        }
+        axios.get('json_data/' + url + '.json',{
+            params:{
+                url:url,
+                flag:flag
+            }
+        }).then(function (res) {
+            var data = JSON.parse(res.request.responseText);
+            console.log(data);
+            var ul = document.createElement('ul');
+            for(var i = 0;i<data.href.length;i++){
+                var href= 'play.html?id=' + data.playIdArr[i];
+                var src = data.img[i];
+                var li = document.createElement('li');
+                var a = document.createElement('a');
+                var img = document.createElement('img');
+                a.setAttribute('href',href);
+                img.setAttribute('src',src);
+                a.appendChild(img);
+                li.appendChild(a);
+                ul.appendChild(li);
+            }
+            content.appendChild(ul);
+        }).catch(function (err) {
+            console.log(err);
+        })
+    }
+</script>
 </html>
